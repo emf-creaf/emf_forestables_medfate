@@ -10,13 +10,13 @@ tar_option_set(
   packages = c("tibble", "sf", "medfate", "medfateland", "terra", "dplyr", "cli"),
   format = "qs",
   memory = "transient",
-  iteration = "list",
   # Workers to be changed in server:
-  controller = crew::crew_controller_local(workers = 5)
+  controller = crew::crew_controller_local(workers = 10),
+  iteration = "list"
 )
 
 # Run the R scripts in the R/ folder with your custom functions:
-tar_source(file.path(c("R", "SpParamsES")))
+tar_source()
 
 # We start from the result of the emf_ifn_forestables pipeline, that is the
 # forestables objects rds files
@@ -32,35 +32,25 @@ forestables_files <- c(
 
 # emf_forestables_medfate target list
 list(
+  # input files target
+  tar_target(input_files, forestables_files),
   # processing data target
   tar_target(
-    processed_data, process_forestables_data(forestables_files),
-    pattern = map(forestables_files),
-    error = NULL
+    processed_data, process_forestables_data(input_files),
+    pattern = map(input_files),
+    error = "null"
   ),
   # correcting soils target
   tar_target(
     corrected_data, correct_soils(processed_data),
     pattern = map(processed_data),
-    error = NULL
+    error = "null"
   ),
   # writing target
   tar_target(
     written_files, write_medfateland_object(corrected_data),
     pattern = map(corrected_data),
-    error = NULL
+    format = "file",
+    error = "null"
   )
 )
-
-
-
-mapped <- tar_map(
-  values = static_branches,
-  tar_target(sf_created, 
-             process_province(emf_dataset_path, ifn, province)),
-  tar_target(soil_corrected,
-             soil_correction_province(sf_created, emf_dataset_path, ifn, province)),
-  tar_target(test,
-             test_province(soil_corrected, ifn, province))
-)
-list(mapped)

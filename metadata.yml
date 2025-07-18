@@ -1,0 +1,31 @@
+id: emf_forestables_medfate
+emf_type: pipeline
+emf_public: false
+emf_automatized: true
+emf_reproducible: true
+emf_draft: true
+emf_data_type: internal_data
+data_repository: ''
+model_repository: ''
+nodes:
+- emf_ifn_forestables
+- medfate
+- medfateland
+- traits4models
+- medfate_model
+authors:
+- mcaceres
+- vgranda
+tags:
+- ifn
+- forest inventories
+- medfateverse
+links:
+  url_source: https://github.com/emf-creaf/emf_forestables_medfate
+requirements: ''
+description: Generation of medfateland-ready data from forestables IFN data
+title: IFN medfateland
+date: '2025-07-18'
+date_lastmod: '2025-07-18'
+data_reposiory: ftp://data-emf.creaf.cat:22111/emf/datasets/ForestInventories/IFN_medfateland
+

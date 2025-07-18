@@ -112,7 +112,7 @@ process_forestables_data <- function(forestables_file) {
   )
 
   # we need rows here, if not abort
-  if (nrow(forestables_data_others) < 1) {
+  if (nrow(forestables_processed_all) < 1) {
     cli::cli_abort(c(
       "x" = "No data available for {version} in province {province}"
     ))
@@ -127,6 +127,7 @@ process_forestables_data <- function(forestables_file) {
   cli::cli_inform(c(
     "    - Adding topo and soil"
   ))
+  browser()
   res <- forestables_processed_all |>
     dplyr::arrange(id) |>
     dplyr::select(-slope, -aspect) |>
