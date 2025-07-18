@@ -3,7 +3,7 @@ emf_type: pipeline
 emf_public: false
 emf_automatized: true
 emf_reproducible: true
-emf_draft: true
+emf_draft: false
 emf_data_type: internal_data
 data_repository: ''
 model_repository: ''
@@ -13,6 +13,9 @@ nodes:
 - medfateland
 - traits4models
 - medfate_model
+- mdt25_etrs89_pnoa
+- soilgrids_internal
+- soildepth_shangguan
 authors:
 - mcaceres
 - vgranda
