@@ -27,9 +27,17 @@ write_medfateland_object <- function(corrected_data) {
   control$soilResults <- FALSE
   control$standResults <- FALSE
   control$snowResults <- FALSE
+  test_data <- corrected_data |>
+    medfateland::check_topography(missing_action = "default") |>
+    medfateland::check_soils(missing_action = "default") |>
+    medfateland::check_forests(
+      SpParams = traits4models::SpParamsES,
+      missing_action = "filter"
+    )
   res_day <- try({
     medfateland::spwb_spatial_day(
-      corrected_data, SpParams = traits4models::SpParamsES,
+      test_data,
+      SpParams = traits4models::SpParamsES,
       meteo = medfate::examplemeteo, date = as.Date("2001-02-01"),
       local_control = control, progress = FALSE
     )
